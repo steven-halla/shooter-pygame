@@ -24,12 +24,13 @@ def draw_bg():
 
 
 class Soldier(pygame.sprite.Sprite):
-    def __init__(self, x, y, scale, speed):
+    def __init__(self, char_type, x, y, scale, speed):
         pygame.sprite.Sprite.__init__(self)
+        self.char_type = char_type
         self.speed = speed
         self.direction = 1
         self.flip = False #flips player imag
-        img = pygame.image.load('img/player/Idle/0.png')
+        img = pygame.image.load(f'img/{self.char_type}/Idle/0.png')
         # lets us scale our image
         self.image = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
         # draws rect around imgage
@@ -57,7 +58,9 @@ class Soldier(pygame.sprite.Sprite):
 
 
 
-player = Soldier(200, 200, 3, 5)
+player = Soldier('player', 200, 200, 3, 5)
+enemy = Soldier('enemy', 400, 200, 3, 5)
+
 
 
 #draws player coordinates
@@ -75,6 +78,7 @@ while run:
     draw_bg()
 
     player.draw()
+    enemy.draw()
     player.move(moving_left, moving_right)
 
     for event in pygame.event.get():
