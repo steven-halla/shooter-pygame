@@ -12,15 +12,24 @@ pygame.display.set_caption('Shooter')
 clock = pygame.time.Clock()
 FPS = 60
 
+#define game variables
+GRAVITY = 0.75
+
 # define player action vars
 
 moving_left = False
 moving_right = False
 
 BG = (144, 201, 120)
+RED = (255, 0, 0)
 
 def draw_bg():
     screen.fill(BG)
+    pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 400))
+
+def draw_bg():
+    screen.fill(BG)
+
 
 
 class Soldier(pygame.sprite.Sprite):
@@ -77,8 +86,14 @@ class Soldier(pygame.sprite.Sprite):
             self.vel_y = -11
             self.jump = False
 
+        #gravity
+        self.vel_y += GRAVITY
+        if self.vel_y > 10:
+            self.vel_y
         dy += self.vel_y
-
+    #flooor collision
+        if self.rect.bottom + dy > 300:
+            dy = 300 - self.rect.bottom
 
 
         self.rect.x += dx
