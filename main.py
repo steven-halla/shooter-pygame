@@ -20,6 +20,7 @@ GRAVITY = 0.75
 
 moving_left = False
 moving_right = False
+shoot = False
 
 #load images
 #bullet
@@ -133,7 +134,12 @@ class Bullet(pygame.sprite.Sprite):
         self.speed = 10
         self.image = bullet_img
         self.rect = self.image.get_rect()
-        self.rect.center = (x,y)
+        self.rect.center = (x, y)
+        self.direction = direction
+
+#sprite groups
+bullet_group = pygame.sprite.Group()
+
 
 player = Soldier('player', 200, 200, 3, 5)
 enemy = Soldier('enemy', 400, 200, 3, 5)
@@ -152,11 +158,19 @@ while run:
     clock.tick(FPS)
     draw_bg()
 
+    #update and draw
+    bullet_group.update()
+    bullet_group.draw(screen)
+
     player.update_animation()
     player.draw()
     enemy.draw()
 
     if player.alive:
+        #shooting bullets
+        if shoot:
+            bullet = Bullet(player.rect.centerx, player.rect.centery, player.direction)
+            bullet_group.add(bullet)
         if player.in_air:
             player.update_action(2)
         elif moving_left or moving_right:
@@ -175,6 +189,8 @@ while run:
                 moving_left = True
             if event.key == pygame.K_d:
                 moving_right = True
+            if event.key == pygame.K_SPACE:
+                shoot = True
             if event.key == pygame.K_w and player.alive:
                 player.jump = True
             if event.key == pygame.K_ESCAPE:
@@ -185,6 +201,9 @@ while run:
                 moving_left = False
             if event.key == pygame.K_d:
                 moving_right = False
+            if event.key == pygame.K_SPACE:
+                shoot = False
+
 
 
 
