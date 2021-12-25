@@ -3,7 +3,6 @@ import os
 
 pygame.init()
 
-
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = int(SCREEN_WIDTH * 0.8)
 
@@ -100,7 +99,6 @@ class Soldier(pygame.sprite.Sprite):
             dy = 300 - self.rect.bottom
             self.in_air = False
 
-
         self.rect.x += dx
         self.rect.y += dy
 
@@ -123,8 +121,6 @@ class Soldier(pygame.sprite.Sprite):
             self.frame_index = 0
             self.update_time = pygame.time.get_ticks()
 
-
-
     def draw(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
 
@@ -144,13 +140,10 @@ bullet_group = pygame.sprite.Group()
 player = Soldier('player', 200, 200, 3, 5)
 enemy = Soldier('enemy', 400, 200, 3, 5)
 
-
-
 # #draws player coordinates
 # x = 200
 # y = 200
 # scale = 3
-
 
 run = True
 while run:
@@ -204,11 +197,6 @@ while run:
             if event.key == pygame.K_SPACE:
                 shoot = False
 
-
-
-
-
     pygame.display.update()
-
 
 pygame.quit()
