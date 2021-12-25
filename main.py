@@ -68,7 +68,9 @@ class Soldier(pygame.sprite.Sprite):
         if pygame.time.get_ticks() - self.update_time > ANIMATION_COOLDOWN:
             self.update_time = pygame.time.get_ticks()
             self.frame_index += 1
-
+        # if the animation has run out the reset back to the start
+        if self.frame_index >= len(self.animation_list):
+            self.frame_index = 0
 
 
     def draw(self):
