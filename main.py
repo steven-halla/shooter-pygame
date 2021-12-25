@@ -12,7 +12,7 @@ pygame.display.set_caption('Shooter')
 clock = pygame.time.Clock()
 FPS = 60
 
-#define player action vars
+# define player action vars
 
 moving_left = False
 moving_right = False
