@@ -39,6 +39,7 @@ class Soldier(pygame.sprite.Sprite):
         self.direction = 1
         self.vel_y = 0
         self.jump = False
+        self.in_air = True
         self.flip = False #flips player imag
         self.animation_list = []
         self.frame_index = 0
@@ -53,7 +54,7 @@ class Soldier(pygame.sprite.Sprite):
             #count number of files in folder
             num_of_frames = len(os.listdir(f'img/{self.char_type}/{animation}'))
             for i in range(num_of_frames):
-                img = pygame.image.load(f'img/{self.char_type}/Idle/{i}.png')
+                img = pygame.image.load(f'img/{self.char_type}/{animation}/{i}.png')
             # lets us scale our image
                 img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
                 temp_list.append(img)
@@ -79,9 +80,10 @@ class Soldier(pygame.sprite.Sprite):
             self.flip = False
             self.direction = 1
         #jump
-        if self.jump == True:
+        if self.jump == True and self.in_air == False:
             self.vel_y = -11
             self.jump = False
+            self.in_air = True
 
         #gravity
         self.vel_y += GRAVITY
@@ -91,6 +93,7 @@ class Soldier(pygame.sprite.Sprite):
     #flooor collision
         if self.rect.bottom + dy > 300:
             dy = 300 - self.rect.bottom
+            self.in_air = False
 
 
         self.rect.x += dx
@@ -144,7 +147,9 @@ while run:
     enemy.draw()
 
     if player.alive:
-        if moving_left or moving_right:
+        if player.in_air:
+            player.update_action(2)
+        elif moving_left or moving_right:
             player.update_action(1)# 1 means run
         else:
             player.update_action(0)
