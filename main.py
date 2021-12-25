@@ -32,14 +32,26 @@ class Soldier(pygame.sprite.Sprite):
         self.flip = False #flips player imag
         self.animation_list = []
         self.frame_index = 0
+        self.action = 0
         self.update_time = pygame.time.get_ticks()
+        temp_list = []
         #animation for loop
         for i in range(5):
             img = pygame.image.load(f'img/{self.char_type}/Idle/{i}.png')
         # lets us scale our image
             img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
-            self.animation_list.append(img)
-        self.image = self.animation_list[self.frame_index]
+            temp_list.append(img)
+        self.animation_list.append(temp_list)
+        temp_list = []
+        for i in range(6):
+            img = pygame.image.load(f'img/{self.char_type}/Run/{i}.png')
+            # lets us scale our image
+            img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
+            temp_list.append(img)
+        self.animation_list.append(temp_list)
+
+        self.image = self.animation_list[self.action][self.frame_index]
+
         # draws rect around imgage
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -63,14 +75,22 @@ class Soldier(pygame.sprite.Sprite):
     def update_animation(self):
         #upadate animation
         ANIMATION_COOLDOWN = 100
-        self.image = self.animation_list[self.frame_index]
+        self.image = self.animation_list[self.action][self.frame_index]
         #check if enough time has passed since last update
         if pygame.time.get_ticks() - self.update_time > ANIMATION_COOLDOWN:
             self.update_time = pygame.time.get_ticks()
             self.frame_index += 1
         # if the animation has run out the reset back to the start
-        if self.frame_index >= len(self.animation_list):
+        if self.frame_index >= len(self.animation_list[self.action]):
             self.frame_index = 0
+
+    def update_action(self, new_action):
+        #check if new action is different
+        if new_action != self.action:
+            self.action = new_action
+            self.frame_index = 0
+            self.update_time = pygame.time.get_ticks()
+
 
 
     def draw(self):
@@ -96,9 +116,13 @@ while run:
     draw_bg()
 
     player.update_animation()
-
     player.draw()
     enemy.draw()
+
+    if moving_left or moving_right:
+        player.update_action(1)# 1 means run
+    else:
+        player.update_action(0)
     player.move(moving_left, moving_right)
 
     for event in pygame.event.get():
