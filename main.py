@@ -21,6 +21,10 @@ GRAVITY = 0.75
 moving_left = False
 moving_right = False
 
+#load images
+#bullet
+bullet_img = pygame.image.load('img/icons/bullet.png').convert_alpha()
+
 BG = (144, 201, 120)
 RED = (255, 0, 0)
 
@@ -54,7 +58,7 @@ class Soldier(pygame.sprite.Sprite):
             #count number of files in folder
             num_of_frames = len(os.listdir(f'img/{self.char_type}/{animation}'))
             for i in range(num_of_frames):
-                img = pygame.image.load(f'img/{self.char_type}/{animation}/{i}.png')
+                img = pygame.image.load(f'img/{self.char_type}/{animation}/{i}.png').convert_alpha()
             # lets us scale our image
                 img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
                 temp_list.append(img)
@@ -123,17 +127,23 @@ class Soldier(pygame.sprite.Sprite):
     def draw(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
 
-
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, x, y, direction):
+        pygame.sprite.Sprite.__init__(self)
+        self.speed = 10
+        self.image = bullet_img
+        self.rect = self.image.get_rect()
+        self.rect.center = (x,y)
 
 player = Soldier('player', 200, 200, 3, 5)
 enemy = Soldier('enemy', 400, 200, 3, 5)
 
 
 
-#draws player coordinates
-x = 200
-y = 200
-scale = 3
+# #draws player coordinates
+# x = 200
+# y = 200
+# scale = 3
 
 
 run = True
