@@ -1,4 +1,5 @@
 import pygame
+import os
 
 pygame.init()
 
@@ -25,10 +26,7 @@ RED = (255, 0, 0)
 
 def draw_bg():
     screen.fill(BG)
-    pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 400))
-
-def draw_bg():
-    screen.fill(BG)
+    pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 300))
 
 
 
@@ -46,21 +44,20 @@ class Soldier(pygame.sprite.Sprite):
         self.frame_index = 0
         self.action = 0
         self.update_time = pygame.time.get_ticks()
-        temp_list = []
-        #animation for loop
-        for i in range(5):
-            img = pygame.image.load(f'img/{self.char_type}/Idle/{i}.png')
-        # lets us scale our image
-            img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
-            temp_list.append(img)
-        self.animation_list.append(temp_list)
-        temp_list = []
-        for i in range(6):
-            img = pygame.image.load(f'img/{self.char_type}/Run/{i}.png')
+
+        animation_types = ['Idle', 'Run', 'Jump']
+        for animation in animation_types:
+            #reset temporray list of imags
+            temp_list = []
+
+            #count number of files in folder
+            num_of_frames = len(os.listdir(f'img/{self.char_type}/{animation}'))
+            for i in range(num_of_frames):
+                img = pygame.image.load(f'img/{self.char_type}/Idle/{i}.png')
             # lets us scale our image
-            img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
-            temp_list.append(img)
-        self.animation_list.append(temp_list)
+                img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
+                temp_list.append(img)
+            self.animation_list.append(temp_list)
 
         self.image = self.animation_list[self.action][self.frame_index]
 
