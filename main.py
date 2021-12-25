@@ -30,9 +30,16 @@ class Soldier(pygame.sprite.Sprite):
         self.speed = speed
         self.direction = 1
         self.flip = False #flips player imag
-        img = pygame.image.load(f'img/{self.char_type}/Idle/0.png')
+        self.animation_list = []
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+        #animation for loop
+        for i in range(5):
+            img = pygame.image.load(f'img/{self.char_type}/Idle/{i}.png')
         # lets us scale our image
-        self.image = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
+            img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
+            self.animation_list.append(img)
+        self.image = self.animation_list[self.frame_index]
         # draws rect around imgage
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -53,6 +60,17 @@ class Soldier(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
+    def update_animation(self):
+        #upadate animation
+        ANIMATION_COOLDOWN = 100
+        self.image = self.animation_list[self.frame_index]
+        #check if enough time has passed since last update
+        if pygame.time.get_ticks() - self.update_time > ANIMATION_COOLDOWN:
+            self.update_time = pygame.time.get_ticks()
+            self.frame_index += 1
+
+
+
     def draw(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
 
@@ -69,13 +87,13 @@ y = 200
 scale = 3
 
 
-
-
 run = True
 while run:
 
     clock.tick(FPS)
     draw_bg()
+
+    player.update_animation()
 
     player.draw()
     enemy.draw()
