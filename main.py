@@ -2,15 +2,26 @@ import pygame
 
 pygame.init()
 
+
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = int(SCREEN_WIDTH * 0.8)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Shooter')
 
+clock = pygame.time.Clock()
+FPS = 60
+
 #define player action vars
+
 moving_left = False
 moving_right = False
+
+BG = (144, 201, 120)
+
+def draw_bg():
+    screen.fill(BG)
+
 
 class Soldier(pygame.sprite.Sprite):
     def __init__(self, x, y, scale, speed):
@@ -23,6 +34,18 @@ class Soldier(pygame.sprite.Sprite):
         # draws rect around imgage
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+
+    def move(self, moving_left, moving_right):
+        #delta x, delta y look this up
+        dx = 0
+        dy = 0
+
+        if moving_left:
+            dx = -self.speed
+        if moving_right:
+            dx = self.speed
+        self.rect.x += dx
+        self.rect.y += dy
 
     def draw(self):
         screen.blit(self.image, self.rect)
@@ -42,7 +65,11 @@ scale = 3
 run = True
 while run:
 
+    clock.tick(FPS)
+    draw_bg()
+
     player.draw()
+    player.move(moving_left, moving_right)
 
     for event in pygame.event.get():
         #quit game
