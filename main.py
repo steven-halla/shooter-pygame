@@ -26,9 +26,12 @@ def draw_bg():
 class Soldier(pygame.sprite.Sprite):
     def __init__(self, char_type, x, y, scale, speed):
         pygame.sprite.Sprite.__init__(self)
+        self.alive = True
         self.char_type = char_type
         self.speed = speed
         self.direction = 1
+        self.vel_y = 0
+        self.jump = False
         self.flip = False #flips player imag
         self.animation_list = []
         self.frame_index = 0
@@ -69,6 +72,15 @@ class Soldier(pygame.sprite.Sprite):
             dx = self.speed
             self.flip = False
             self.direction = 1
+        #jump
+        if self.jump == True:
+            self.vel_y = -11
+            self.jump = False
+
+        dy += self.vel_y
+
+
+
         self.rect.x += dx
         self.rect.y += dy
 
@@ -119,11 +131,12 @@ while run:
     player.draw()
     enemy.draw()
 
-    if moving_left or moving_right:
-        player.update_action(1)# 1 means run
-    else:
-        player.update_action(0)
-    player.move(moving_left, moving_right)
+    if player.alive:
+        if moving_left or moving_right:
+            player.update_action(1)# 1 means run
+        else:
+            player.update_action(0)
+        player.move(moving_left, moving_right)
 
     for event in pygame.event.get():
         #quit game
@@ -135,14 +148,17 @@ while run:
                 moving_left = True
             if event.key == pygame.K_d:
                 moving_right = True
+            if event.key == pygame.K_w and player.alive:
+                player.jump = True
+            if event.key == pygame.K_ESCAPE:
+                run = False
         #keyboard button release
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
                 moving_left = False
             if event.key == pygame.K_d:
                 moving_right = False
-            if event.key == pygame.K_ESCAPE:
-                run = False
+
 
 
 
