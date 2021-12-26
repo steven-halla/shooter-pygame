@@ -133,6 +133,13 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.direction = direction
 
+    def update(self):
+        #move bullet
+        self.rect.x += (self.direction * self.speed)
+        #check if bullet has left screen
+        if self.rect.right < 0 or self.rect.left > SCREEN_WIDTH -100:
+            self.kill()
+
 #sprite groups
 bullet_group = pygame.sprite.Group()
 
@@ -162,7 +169,7 @@ while run:
     if player.alive:
         #shooting bullets
         if shoot:
-            bullet = Bullet(player.rect.centerx + (0.6 * player.rect.size[0]), player.rect.centery, player.direction)
+            bullet = Bullet(player.rect.centerx + (0.6 * player.rect.size[0] * player.direction), player.rect.centery, player.direction)
             bullet_group.add(bullet)
         if player.in_air:
             player.update_action(2)
