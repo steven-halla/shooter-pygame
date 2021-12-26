@@ -35,11 +35,13 @@ def draw_bg():
 
 
 class Soldier(pygame.sprite.Sprite):
-    def __init__(self, char_type, x, y, scale, speed):
+    def __init__(self, char_type, x, y, scale, speed, ammo):
         pygame.sprite.Sprite.__init__(self)
         self.alive = True
         self.char_type = char_type
         self.speed = speed
+        self.ammo = ammo
+        self.start_ammo = ammo
         self.shoot_cooldown = 0
         self.direction = 1
         self.vel_y = 0
@@ -157,8 +159,8 @@ class Bullet(pygame.sprite.Sprite):
 bullet_group = pygame.sprite.Group()
 
 
-player = Soldier('player', 200, 200, 3, 5)
-enemy = Soldier('enemy', 400, 200, 3, 5)
+player = Soldier('player', 200, 200, 3, 5, 20)
+enemy = Soldier('enemy', 400, 200, 3, 5, 20)
 
 # #draws player coordinates
 # x = 200
