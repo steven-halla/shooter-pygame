@@ -40,6 +40,7 @@ class Soldier(pygame.sprite.Sprite):
         self.alive = True
         self.char_type = char_type
         self.speed = speed
+        self.shoot_cooldown = 0
         self.direction = 1
         self.vel_y = 0
         self.jump = False
@@ -69,6 +70,11 @@ class Soldier(pygame.sprite.Sprite):
         # draws rect around imgage
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+
+    def update(self):
+        self.update_animation()
+        if self.shoot_cooldown > 0:
+            self.shoot_cooldown -= 1
 
     def move(self, moving_left, moving_right):
         #delta x, delta y look this up
@@ -101,6 +107,13 @@ class Soldier(pygame.sprite.Sprite):
 
         self.rect.x += dx
         self.rect.y += dy
+
+    def shoot(self):
+        if self.shoot_cooldown == 0:
+            self.shoot_cooldown = 20
+            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery,
+                            self.direction)
+            bullet_group.add(bullet)
 
     def update_animation(self):
         #upadate animation
@@ -162,15 +175,14 @@ while run:
     bullet_group.update()
     bullet_group.draw(screen)
 
-    player.update_animation()
+    player.update()
     player.draw()
     enemy.draw()
 
     if player.alive:
         #shooting bullets
         if shoot:
-            bullet = Bullet(player.rect.centerx + (0.6 * player.rect.size[0] * player.direction), player.rect.centery, player.direction)
-            bullet_group.add(bullet)
+            player.shoot()
         if player.in_air:
             player.update_action(2)
         elif moving_left or moving_right:
