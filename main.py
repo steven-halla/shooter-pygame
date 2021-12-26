@@ -111,11 +111,13 @@ class Soldier(pygame.sprite.Sprite):
         self.rect.y += dy
 
     def shoot(self):
-        if self.shoot_cooldown == 0:
+        if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
             bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery,
                             self.direction)
             bullet_group.add(bullet)
+
+            self.ammo -= 1
 
     def update_animation(self):
         #upadate animation
