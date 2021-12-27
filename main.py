@@ -43,6 +43,10 @@ class Soldier(pygame.sprite.Sprite):
         self.ammo = ammo
         self.start_ammo = ammo
         self.shoot_cooldown = 0
+
+        self.health = 100
+        self.max_health = self.health
+
         self.direction = 1
         self.vel_y = 0
         self.jump = False
@@ -156,6 +160,18 @@ class Bullet(pygame.sprite.Sprite):
         #check if bullet has left screen
         if self.rect.right < 0 or self.rect.left > SCREEN_WIDTH -100:
             self.kill()
+
+        #check collision wtih enemies
+        if pygame.sprite.spritecollide(player, bullet_group, False):
+            if player.alive:
+                player.health -= 5
+                self.kill()
+
+        if pygame.sprite.spritecollide(enemy, bullet_group, False):
+            if enemy.alive:
+                enemy.health -= 25
+                self.kill()
+
 
 #sprite groups
 bullet_group = pygame.sprite.Group()
