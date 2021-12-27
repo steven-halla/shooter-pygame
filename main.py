@@ -24,7 +24,6 @@ grenade = False
 grenade_thrown = False
 
 #load images
-#bullet
 bullet_img = pygame.image.load('img/icons/bullet.png').convert_alpha()
 grenade_img = pygame.image.load('img/icons/grenade.png').convert_alpha()
 
@@ -216,6 +215,17 @@ class Grenade(pygame.sprite.Sprite):
 
         self.rect.x += dx
         self.rect.y += dy
+
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self, x, y, scale):
+        pygame.sprite.Sprite.__init__(self)
+        self.images = []
+        for num in range(1, 6):
+            img = pygame.image.load(f'img/explosion/exp{num}.png').convert_alpha()
+            img = pygame.transform.scale(int(img, (img.get_width() * scale), img.get_height() * scale))
+        self.image = grenade_img
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
 
 
 #sprite groups
