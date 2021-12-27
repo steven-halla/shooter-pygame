@@ -206,6 +206,17 @@ class Grenade(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
+        if self.rect.bottom + dy > 300:
+            dy = 300 - self.rect.bottom
+            self.speed = 0
+
+        if self.rect.left + dx < 0 or self.rect.right + dx > SCREEN_WIDTH - 100:
+            self.direction *= -1
+            dx = self.direction * self.speed
+
+        self.rect.x += dx
+        self.rect.y += dy
+
 
 #sprite groups
 bullet_group = pygame.sprite.Group()
