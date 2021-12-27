@@ -199,6 +199,13 @@ class Grenade(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.direction = direction
 
+    def update(self):
+        self.vel_y += GRAVITY
+        dx = self.direction * self.speed
+        dy = self.vel_y
+        self.rect.x += dx
+        self.rect.y += dy
+
 
 #sprite groups
 bullet_group = pygame.sprite.Group()
@@ -244,7 +251,6 @@ while run:
             grenade_group.add(grenade)
             player.grenades -= 1
             grenade_thrown = True
-            print(player.grenades)
         if player.in_air:
             player.update_action(2)
         elif moving_left or moving_right:
