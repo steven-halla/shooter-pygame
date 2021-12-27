@@ -57,7 +57,7 @@ class Soldier(pygame.sprite.Sprite):
         self.action = 0
         self.update_time = pygame.time.get_ticks()
 
-        animation_types = ['Idle', 'Run', 'Jump']
+        animation_types = ['Idle', 'Run', 'Jump', 'Death']
         for animation in animation_types:
             #reset temporray list of imags
             temp_list = []
@@ -141,6 +141,13 @@ class Soldier(pygame.sprite.Sprite):
             self.action = new_action
             self.frame_index = 0
             self.update_time = pygame.time.get_ticks()
+
+    def check_alive(self):
+        if self.health <= 0:
+            self.health = 0
+            self.speed = 0
+            self.alive = False
+            self.update_action()
 
     def draw(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
