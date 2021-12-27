@@ -79,6 +79,7 @@ class Soldier(pygame.sprite.Sprite):
 
     def update(self):
         self.update_animation()
+        self.check_alive()
         if self.shoot_cooldown > 0:
             self.shoot_cooldown -= 1
 
@@ -147,7 +148,7 @@ class Soldier(pygame.sprite.Sprite):
             self.health = 0
             self.speed = 0
             self.alive = False
-            self.update_action()
+            self.update_action(3)
 
     def draw(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
@@ -204,6 +205,8 @@ while run:
 
     player.update()
     player.draw()
+
+    enemy.update()
     enemy.draw()
 
     if player.alive:
