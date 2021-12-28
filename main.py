@@ -246,7 +246,8 @@ class Explosion(pygame.sprite.Sprite):
             self.frame_index += 1
             if self.frame_index >= len(self.images):
                 self.kill()
-            self.images = self.images[self.frame_index]
+            else:
+                self.images = self.images[self.frame_index]
 
 
 #sprite groups
@@ -339,3 +340,5 @@ while run:
     pygame.display.update()
 
 pygame.quit()
+
+1
