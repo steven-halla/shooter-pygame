@@ -221,6 +221,9 @@ class Grenade(pygame.sprite.Sprite):
             self.kill()
             explosion = Explosion(self.rect.x, self.rect.y, 0.5)
             explosion_group.add(explosion)
+            if abs(self.rect.centerx - player.rect.centerx) <  TILE_SIZE * 2 and \
+                    abs(self.rect.centery - player.rect.centery) < TILE_SIZE * 2:
+                player.health -= 50
 
 class Explosion(pygame.sprite.Sprite):
     def __init__(self, x, y, scale):
