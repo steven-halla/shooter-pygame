@@ -168,7 +168,7 @@ class Soldier(pygame.sprite.Sprite):
 
     def draw(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
-
+        pygame.draw.rect(screen, RED, self.rect, 1) #shows rectangles of enemy and plaeyrs
 
 class ItemBox(pygame.sprite.Sprite):
     def __init__(self, item_type, x, y):
@@ -177,6 +177,10 @@ class ItemBox(pygame.sprite.Sprite):
         self.image = item_boxes[self.item_type]
         self.rect = self.image.get_rect()
         self.rect.midtop = (x + TILE_SIZE // 2, y + (TILE_SIZE - self.image.get_height()))
+
+    def update(self):
+        if pygame.sprite.collide_rect(self, player):
+            pass
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
