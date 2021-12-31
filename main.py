@@ -330,8 +330,13 @@ while run:
     clock.tick(FPS)
     draw_bg()
 
-    draw_text(f'AMMO:{player.ammo}', font, WHITE, 10, 35)
-    draw_text(f'Grenades:{player.grenades}', font, WHITE, 10, 55)
+    draw_text('AMMO: ', font, WHITE, 10, 35)
+    for x in range(player.ammo):
+        screen.blit(bullet_img, (90 + (x * 10), 40))
+
+    draw_text('GRENADES: ', font, WHITE, 10, 55)
+    for x in range(player.grenades):
+        screen.blit(grenade_img, (135 + (x * 15), 60))
 
 
     player.update()
