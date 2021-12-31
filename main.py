@@ -39,6 +39,7 @@ item_boxes = {
 BG = (144, 201, 120)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
 
 font = pygame.font.SysFont('Futura', 30)
 
@@ -197,6 +198,21 @@ class ItemBox(pygame.sprite.Sprite):
                 player.grenades += 3
             self.kill()
 
+class HealthBar():
+    def __init__(self, x, y, health, max_health):
+        self.x = x
+        self.y = y
+        self.health = health
+        self.max_health = max_health
+
+    def draw(self, health):
+        self.health = health
+        ratio = self.health / self.max_health
+        pygame.draw.rect(screen, RED, (self.x, self.y, 150, 20))
+        pygame.draw.rect(screen, GREEN, (self.x, self.y, 150 * ratio, 20))
+
+
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
@@ -313,6 +329,8 @@ item_box = ItemBox('Grenade', 500, 260)
 item_box_group.add(item_box)
 
 player = Soldier('player', 200, 200, 3, 5, 20, 5)
+health_bar = HealthBar(10, 10, player.health, player.health)
+
 enemy = Soldier('enemy', 400, 200, 3, 5, 20, 0)
 enemy2 = Soldier('enemy', 300, 300, 3, 5, 20, 0)
 
@@ -329,6 +347,7 @@ while run:
 
     clock.tick(FPS)
     draw_bg()
+    health_bar.draw(player.health)
 
     draw_text('AMMO: ', font, WHITE, 10, 35)
     for x in range(player.ammo):
