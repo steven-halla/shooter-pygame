@@ -286,11 +286,11 @@ item_box_group = pygame.sprite.Group()
 
 
 #create item boxes
-item_box = ItemBox('Health', 100, 300)
+item_box = ItemBox('Health', 100, 260)
 item_box_group.add(item_box)
-item_box = ItemBox('Ammo', 400, 300)
+item_box = ItemBox('Ammo', 400, 260)
 item_box_group.add(item_box)
-item_box = ItemBox('Grenade', 500, 300)
+item_box = ItemBox('Grenade', 500, 260)
 item_box_group.add(item_box)
 
 player = Soldier('player', 200, 200, 3, 5, 20, 5)
