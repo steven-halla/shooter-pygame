@@ -39,6 +39,12 @@ item_boxes = {
 BG = (144, 201, 120)
 RED = (255, 0, 0)
 
+font = pygame.font.SysFont('Futura', 30)
+
+def draw_text(text, font, text_col, x, y):
+    img = font.render(text_col, True, text_col)
+    screen.blit(img, (x, y))
+
 def draw_bg():
     screen.fill(BG)
     pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 300))
@@ -182,6 +188,8 @@ class ItemBox(pygame.sprite.Sprite):
         if pygame.sprite.collide_rect(self, player):
             if self.item_type == 'Health':
                 player.health += 25
+                if player.health > player.max_health:
+                    player.health = player.max_health
             elif self.item_type == 'Ammo':
                 player.ammo += 15
             elif self.item_type == 'Grenade':
