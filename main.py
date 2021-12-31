@@ -40,6 +40,7 @@ BG = (144, 201, 120)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
+BLACK = (0, 0, 0)
 
 font = pygame.font.SysFont('Futura', 30)
 
@@ -208,6 +209,8 @@ class HealthBar():
     def draw(self, health):
         self.health = health
         ratio = self.health / self.max_health
+        pygame.draw.rect(screen, BLACK, (self.x - 2, self.y - 2, 154 * ratio, 24))
+
         pygame.draw.rect(screen, RED, (self.x, self.y, 150, 20))
         pygame.draw.rect(screen, GREEN, (self.x, self.y, 150 * ratio, 20))
 
