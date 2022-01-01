@@ -1,5 +1,6 @@
 import pygame
 import os
+import random
 
 pygame.init()
 
@@ -80,6 +81,8 @@ class Soldier(pygame.sprite.Sprite):
         self.update_time = pygame.time.get_ticks()
         #ai only vars
         self.move_counter = 0
+        self.idling = False
+        self.idling_counter = 0
 
         animation_types = ['Idle', 'Run', 'Jump', 'Death']
         for animation in animation_types:
@@ -150,18 +153,27 @@ class Soldier(pygame.sprite.Sprite):
 
     def ai(self):
         if self.alive and player.alive:
-            if self.direction == 1:
-                ai_moving_right = True
-            else:
-                ai_moving_right = False
-            ai_moving_left = not ai_moving_right
-            self.move(ai_moving_left, ai_moving_right)
-            self.update_action(1)#1 is run action
-            self.move_counter += 1
+            if self.idling == False and random.randint(1, 200) == 1:
+                self.update_action(0)
+                self.idling = True
+                self.idling_counter = 50
+            if self.idling == False:
+                if self.direction == 1:
+                    ai_moving_right = True
+                else:
+                    ai_moving_right = False
+                ai_moving_left = not ai_moving_right
+                self.move(ai_moving_left, ai_moving_right)
+                self.update_action(1)#1 is run action
+                self.move_counter += 1
 
-            if self.move_counter > TILE_SIZE:
-                self.direction *= -1
-                self.move_counter *= -1
+                if self.move_counter > TILE_SIZE:
+                    self.direction *= -1
+                    self.move_counter *= -1
+            else:
+                self.idling_counter -= 1
+                if self.idling_counter <= 0:
+                    self.idling = False
 
     def update_animation(self):
         #upadate animation
@@ -351,8 +363,8 @@ item_box_group.add(item_box)
 player = Soldier('player', 200, 200, 1.65, 5, 20, 5)
 health_bar = HealthBar(10, 10, player.health, player.health)
 
-enemy = Soldier('enemy', 400, 200, 1.65, 5, 20, 0)
-enemy2 = Soldier('enemy', 300, 200, 1.65, 5, 20, 0)
+enemy = Soldier('enemy', 400, 200, 1.65, 2, 20, 0)
+enemy2 = Soldier('enemy', 300, 200, 1.65, 2, 20, 0)
 
 enemy_group.add(enemy)
 enemy_group.add(enemy2)
