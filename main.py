@@ -78,6 +78,8 @@ class Soldier(pygame.sprite.Sprite):
         self.frame_index = 0
         self.action = 0
         self.update_time = pygame.time.get_ticks()
+        #ai only vars
+        self.move_counter = 0
 
         animation_types = ['Idle', 'Run', 'Jump', 'Death']
         for animation in animation_types:
@@ -154,6 +156,11 @@ class Soldier(pygame.sprite.Sprite):
                 ai_moving_right = False
             ai_moving_left = not ai_moving_right
             self.move(ai_moving_left, ai_moving_right)
+            self.move_counter += 1
+
+            if self.move_counter > TILE_SIZE:
+                self.direction *= -1
+                self.move_counter *= -1
 
     def update_animation(self):
         #upadate animation
@@ -368,7 +375,6 @@ while run:
     draw_text('GRENADES: ', font, WHITE, 10, 55)
     for x in range(player.grenades):
         screen.blit(grenade_img, (135 + (x * 15), 60))
-
 
     player.update()
     player.draw()
