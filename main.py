@@ -145,7 +145,7 @@ class Soldier(pygame.sprite.Sprite):
     def shoot(self):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery,
+            bullet = Bullet(self.rect.centerx + (0.75 * self.rect.size[0] * self.direction), self.rect.centery,
                             self.direction)
             bullet_group.add(bullet)
 
@@ -363,7 +363,7 @@ item_box_group.add(item_box)
 player = Soldier('player', 200, 200, 1.65, 5, 20, 5)
 health_bar = HealthBar(10, 10, player.health, player.health)
 
-enemy = Soldier('enemy', 400, 200, 1.65, 2, 20, 0)
+enemy = Soldier('enemy', 500, 200, 1.65, 2, 20, 0)
 enemy2 = Soldier('enemy', 300, 200, 1.65, 2, 20, 0)
 
 enemy_group.add(enemy)
