@@ -164,27 +164,28 @@ class Soldier(pygame.sprite.Sprite):
                 #stop running and face player
                 self.update_action(0)#0: idle
                 self.shoot()
-            if self.idling == False:
-                if self.direction == 1:
-                    ai_moving_right = True
-                else:
-                    ai_moving_right = False
-                ai_moving_left = not ai_moving_right
-                self.move(ai_moving_left, ai_moving_right)
-                self.update_action(1)#1 is run action
-                self.move_counter += 1
-                #update ai vision
-                self.vision.center = (self.rect.centerx + 75 * self.direction, self.rect.centery)
-                pygame.draw.rect(screen, RED, self.vision)
-
-                if self.move_counter > TILE_SIZE:
-                    self.direction *= -1
-                    self.move_counter *= -1
-
             else:
-                self.idling_counter -= 1
-                if self.idling_counter <= 0:
-                    self.idling = False
+                if self.idling == False:
+                    if self.direction == 1:
+                        ai_moving_right = True
+                    else:
+                        ai_moving_right = False
+                    ai_moving_left = not ai_moving_right
+                    self.move(ai_moving_left, ai_moving_right)
+                    self.update_action(1)#1 is run action
+                    self.move_counter += 1
+                    #update ai vision
+                    self.vision.center = (self.rect.centerx + 75 * self.direction, self.rect.centery)
+                    pygame.draw.rect(screen, RED, self.vision)
+
+                    if self.move_counter > TILE_SIZE:
+                        self.direction *= -1
+                        self.move_counter *= -1
+
+                else:
+                    self.idling_counter -= 1
+                    if self.idling_counter <= 0:
+                        self.idling = False
 
     def update_animation(self):
         #upadate animation
