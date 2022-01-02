@@ -234,6 +234,7 @@ class Soldier(pygame.sprite.Sprite):
 
 class World():
     def __init__(self):
+        #this is so we don't do a check against all tiles just obstacles
         self.obstacle_list = []
 
     def process_data(self, data):
@@ -245,6 +246,35 @@ class World():
                     img_rect = img.get_rect()
                     img_rect.x = x * TILE_SIZE
                     img_rect.y = y * TILE_SIZE
+                    tile_data = (img, img_rect)
+                    if tile >= 0 and tile <= 8:
+                        self.obstacle_list.append(tile_data)
+                    elif tile >= 9 and tile <= 10:
+                        pass#water
+                    elif tile >= 11 and tile <= 14:
+                        pass#decoration
+                    elif tile >= 15:#create player
+                        player = Soldier('player', x * TILE_SIZE, y * TILE_SIZE, 1.65, 5, 20, 5)
+                        health_bar = HealthBar(10, 10, player.health, player.health)
+                    elif tile == 16:#create enemy
+                        enemy = Soldier('enemy', x * TILE_SIZE, y * TILE_SIZE, 1.65, 2, 20, 0)
+                        enemy_group.add(enemy)
+                    elif tile == 17:#create ammo box
+                        item_box = ItemBox('Ammo', x * TILE_SIZE, y * TILE_SIZE)
+                        item_box_group.add(item_box)
+                    elif tile == 18:  # nades
+                        item_box = ItemBox('Grenade', x * TILE_SIZE, y * TILE_SIZE)
+                        item_box_group.add(item_box)
+                    elif tile == 19:  # health box
+                        item_box = ItemBox('Health', x * TILE_SIZE, y * TILE_SIZE)
+                        item_box_group.add(item_box)
+                    elif tile == 20:  # exit
+                        pass
+                        # item_box = ItemBox('Exit', x * TILE_SIZE, y * TILE_SIZE)
+                        # item_box_group.add(item_box)
+        return player, health_bar
+
+
 
 
 
@@ -393,22 +423,22 @@ explosion_group = pygame.sprite.Group()
 item_box_group = pygame.sprite.Group()
 
 
-#create item boxes
-item_box = ItemBox('Health', 100, 260)
-item_box_group.add(item_box)
-item_box = ItemBox('Ammo', 400, 260)
-item_box_group.add(item_box)
-item_box = ItemBox('Grenade', 500, 260)
-item_box_group.add(item_box)
+# #create item boxes
+# item_box = ItemBox('Health', 100, 260)
+# item_box_group.add(item_box)
+# item_box = ItemBox('Ammo', 400, 260)
+# item_box_group.add(item_box)
+# item_box = ItemBox('Grenade', 500, 260)
+# item_box_group.add(item_box)
 
-player = Soldier('player', 200, 200, 1.65, 5, 20, 5)
-health_bar = HealthBar(10, 10, player.health, player.health)
-
-enemy = Soldier('enemy', 500, 200, 1.65, 2, 20, 0)
-enemy2 = Soldier('enemy', 300, 200, 1.65, 2, 20, 0)
-
-enemy_group.add(enemy)
-enemy_group.add(enemy2)
+# player = Soldier('player', 200, 200, 1.65, 5, 20, 5)
+# health_bar = HealthBar(10, 10, player.health, player.health)
+#
+# enemy = Soldier('enemy', 500, 200, 1.65, 2, 20, 0)
+# enemy2 = Soldier('enemy', 300, 200, 1.65, 2, 20, 0)
+#
+# enemy_group.add(enemy)
+# enemy_group.add(enemy2)
 
 # #draws player coordinates
 # x = 200
@@ -427,6 +457,10 @@ with open(f'level{level}_data.csv', newline='') as csvfile:
         for y, tile in enumerate(row):
             world_data[x][y] = int(tile)
 print(world_data)
+
+#makes variables global
+world = World()
+player, health_bar = world.process_data(world_data)
 
 run = True
 while run:
