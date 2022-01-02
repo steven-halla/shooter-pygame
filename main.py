@@ -16,11 +16,11 @@ FPS = 60
 
 #define game variables
 GRAVITY = 0.75
-TILE_SIZE = 40
 #levels
 ROWS = 16
 COLS = 150
 TILE_SIZE = SCREEN_HEIGHT // ROWS
+# TILE_TYPES =
 level = 1
 
 # define player action vars
@@ -390,6 +390,12 @@ enemy_group.add(enemy2)
 # x = 200
 # y = 200
 # scale = 3
+
+#empty tile list
+world_data = []
+for row in range(ROWS):
+    r = [-1] * COLS
+    world_data.append(r)
 
 run = True
 while run:
