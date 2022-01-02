@@ -250,9 +250,12 @@ class World():
                     if tile >= 0 and tile <= 8:
                         self.obstacle_list.append(tile_data)
                     elif tile >= 9 and tile <= 10:
-                        pass#water
+                        water = Water(img, x * TILE_SIZE, y * TILE_SIZE)
+                        water_group.add(water)#water
                     elif tile >= 11 and tile <= 14:
-                        pass#decoration
+                        #decoration
+                        decoration = Decoration(img, x * TILE_SIZE, y * TILE_SIZE)
+                        decoration_group.add(decoration)
                     elif tile >= 15:#create player
                         player = Soldier('player', x * TILE_SIZE, y * TILE_SIZE, 1.65, 5, 20, 5)
                         health_bar = HealthBar(10, 10, player.health, player.health)
@@ -269,9 +272,8 @@ class World():
                         item_box = ItemBox('Health', x * TILE_SIZE, y * TILE_SIZE)
                         item_box_group.add(item_box)
                     elif tile == 20:  # exit
-                        pass
-                        # item_box = ItemBox('Exit', x * TILE_SIZE, y * TILE_SIZE)
-                        # item_box_group.add(item_box)
+                        exit = Exit(img, x * TILE_SIZE, y * TILE_SIZE)
+                        exit_group.add(exit)
         return player, health_bar
 
     def draw(self):
@@ -279,7 +281,26 @@ class World():
             screen.blit(tile[0], tile[1])
 
 
+class Decoration(pygame.sprite.Sprite):
+    def __init__(self, img, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.midtop = (x + TILE_SIZE // 2, y + (TILE_TYPES - self.image.get_height()))
 
+class Water(pygame.sprite.Sprite):
+    def __init__(self, img, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.midtop = (x + TILE_SIZE // 2, y + (TILE_TYPES - self.image.get_height()))
+
+class Exit(pygame.sprite.Sprite):
+    def __init__(self, img, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.midtop = (x + TILE_SIZE // 2, y + (TILE_TYPES - self.image.get_height()))
 
 
 
