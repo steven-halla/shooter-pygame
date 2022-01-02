@@ -20,7 +20,7 @@ GRAVITY = 0.75
 ROWS = 16
 COLS = 150
 TILE_SIZE = SCREEN_HEIGHT // ROWS
-# TILE_TYPES =
+TILE_TYPES = 21
 level = 1
 
 # define player action vars
@@ -30,6 +30,13 @@ moving_right = False
 shoot = False
 grenade = False
 grenade_thrown = False
+
+#tiles in a list
+img_list = []
+for x in range(TILE_TYPES):
+    img = pygame.image.load(f'img/Tile/{x}.png')
+    img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
+    img_list.append(img)
 
 #load images
 bullet_img = pygame.image.load('img/icons/bullet.png').convert_alpha()
@@ -224,6 +231,23 @@ class Soldier(pygame.sprite.Sprite):
     def draw(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
         # pygame.draw.rect(screen, RED, self.rect, 1) #shows rectangles of enemy and plaeyrs
+
+class World():
+    def __init__(self):
+        self.obstacle_list = []
+
+    def process_data(self, data):
+        #iteriate through each value in level data file
+        for y, row in enumerate(data):
+            for x, tile in enumerate(row):
+                if tile >= 0:
+                    img = img_list[tile]
+                    img_rect = img.get_rect()
+                    img_rect.x = x * TILE_SIZE
+                    img_rect.y = y * TILE_SIZE
+
+
+
 
 class ItemBox(pygame.sprite.Sprite):
     def __init__(self, item_type, x, y):
