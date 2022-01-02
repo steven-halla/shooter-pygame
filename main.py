@@ -17,6 +17,11 @@ FPS = 60
 #define game variables
 GRAVITY = 0.75
 TILE_SIZE = 40
+#levels
+ROWS = 16
+COLS = 150
+TILE_SIZE = SCREEN_HEIGHT // ROWS
+level = 1
 
 # define player action vars
 
