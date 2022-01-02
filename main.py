@@ -274,6 +274,10 @@ class World():
                         # item_box_group.add(item_box)
         return player, health_bar
 
+    def draw(self):
+        for tile in self.obstacle_list:
+            screen.blit(tile[0], tile[1])
+
 
 
 
@@ -467,6 +471,9 @@ while run:
 
     clock.tick(FPS)
     draw_bg()
+
+
+    world.draw()
     health_bar.draw(player.health)
 
     draw_text('AMMO: ', font, WHITE, 10, 35)
