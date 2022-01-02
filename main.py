@@ -399,9 +399,10 @@ for row in range(ROWS):
 
 with open(f'level{level}_data.csv', newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
-    for row in reader:
-        for tile in row:
-            world_data
+    for x, row in enumerate(reader):
+        for y, tile in enumerate(row):
+            world_data[x][y] = int(tile)
+print(world_data)
 
 run = True
 while run:
