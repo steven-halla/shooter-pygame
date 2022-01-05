@@ -156,11 +156,15 @@ class Soldier(pygame.sprite.Sprite):
                 dx = 0
             #y collision
             if tile[1].colliderect(self.rect.x , self.rect.y + dy, self.width, self.height):
-                dy = 0
-
-        if self.rect.bottom + dy > 300:
-            dy = 300 - self.rect.bottom
-            self.in_air = False
+                #check if below ground jumping
+                if self.vel_y < 0:
+                    self.vel_y = 0
+                    dy = tile[1].bottom - self.rect.top
+                #check for falling
+                if self.vel_y >= 0:
+                    self.vel_y = 0
+                    self.in_air = False
+                    dy = tile[1].top - self.rect.bottom
 
         self.rect.x += dx
         self.rect.y += dy
