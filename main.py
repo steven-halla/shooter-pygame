@@ -118,6 +118,8 @@ class Soldier(pygame.sprite.Sprite):
         # draws rect around imgage
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
 
     def update(self):
         self.update_animation()
@@ -161,7 +163,7 @@ class Soldier(pygame.sprite.Sprite):
                     self.vel_y = 0
                     dy = tile[1].bottom - self.rect.top
                 #check for falling
-                if self.vel_y >= 0:
+                elif self.vel_y >= 0:
                     self.vel_y = 0
                     self.in_air = False
                     dy = tile[1].top - self.rect.bottom
