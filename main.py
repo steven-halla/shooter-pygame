@@ -151,7 +151,12 @@ class Soldier(pygame.sprite.Sprite):
         dy += self.vel_y
     #check for collision
         for tile in world.obstacle_list:
-            #x direction
+            #x collision
+            if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
+                dx = 0
+            #y collision
+            if tile[1].colliderect(self.rect.x , self.rect.y + dy, self.width, self.height):
+                dy = 0
 
         if self.rect.bottom + dy > 300:
             dy = 300 - self.rect.bottom
