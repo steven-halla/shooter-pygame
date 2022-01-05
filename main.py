@@ -294,6 +294,9 @@ class World():
             screen.blit(tile[0], tile[1])
 
 
+#from here done is the bug
+
+
 class Decoration(pygame.sprite.Sprite):
     def __init__(self, img, x, y):
         pygame.sprite.Sprite.__init__(self)
@@ -352,8 +355,7 @@ class HealthBar():
         pygame.draw.rect(screen, RED, (self.x, self.y, 150, 20))
         pygame.draw.rect(screen, GREEN, (self.x, self.y, 150 * ratio, 20))
 
-
-
+#this class is wrong and needs re factor
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
@@ -367,7 +369,7 @@ class Bullet(pygame.sprite.Sprite):
         #move bullet
         self.rect.x += (self.direction * self.speed)
         #check if bullet has left screen
-        if self.rect.right < 0 or self.rect.left > SCREEN_WIDTH -100:
+        if self.rect.right < 0 or self.rect.left > SCREEN_WIDTH:
             self.kill()
         #check for enirnment collison
         for tile in world.obstacle_list:
@@ -386,6 +388,7 @@ class Bullet(pygame.sprite.Sprite):
                     enemy.health -= 25
                     self.kill()
 
+#below here code is good
 class Grenade(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
@@ -468,6 +471,7 @@ class Explosion(pygame.sprite.Sprite):
             else:
                 self.image = self.images[self.frame_index]
 
+#below here code is good
 
 #sprite groups
 enemy_group = pygame.sprite.Group()
@@ -520,6 +524,7 @@ print(world_data)
 world = World()
 player, health_bar = world.process_data(world_data)
 
+#this code is good
 run = True
 while run:
 
