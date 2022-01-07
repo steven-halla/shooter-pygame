@@ -73,6 +73,9 @@ def draw_bg():
     screen.fill(BG)
     screen.blit(sky_img, (0,0))
     screen.blit(mountain_img, (0, SCREEN_HEIGHT - mountain_img.get_height() - 300))
+    screen.blit(pine1_img, (0, SCREEN_HEIGHT - pine1_img.get_height() - 150))
+    screen.blit(pine2_img, (0, SCREEN_HEIGHT - pine2_img.get_height()))
+
 
 
 
