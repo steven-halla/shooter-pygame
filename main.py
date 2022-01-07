@@ -31,6 +31,13 @@ shoot = False
 grenade = False
 grenade_thrown = False
 
+#load images
+pine1_img = pygame.image.load('img/background/pine1.png').convert_alpha()
+pine2_img = pygame.image.load('img/background/pine2.png').convert_alpha()
+mountain_img = pygame.image.load('img/background/mountain.png').convert_alpha()
+sky_img = pygame.image.load('img/background/sky.png').convert_alpha()
+
+
 #tiles in a list
 img_list = []
 for x in range(TILE_TYPES):
