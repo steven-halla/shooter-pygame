@@ -36,6 +36,10 @@ grenade = False
 grenade_thrown = False
 
 #load images
+start_img = pygame.image.load('img/start_btn.png').convert_alpha()
+exit_img = pygame.image.load('img/exit_btn.png').convert_alpha()
+
+#background
 pine1_img = pygame.image.load('img/background/pine1.png').convert_alpha()
 pine2_img = pygame.image.load('img/background/pine2.png').convert_alpha()
 mountain_img = pygame.image.load('img/background/mountain.png').convert_alpha()
@@ -523,7 +527,8 @@ class Explosion(pygame.sprite.Sprite):
             else:
                 self.image = self.images[self.frame_index]
 
-#below here code is good
+#create buttons
+start_button =
 
 #sprite groups
 enemy_group = pygame.sprite.Group()
@@ -535,29 +540,6 @@ decoration_group = pygame.sprite.Group()
 water_group = pygame.sprite.Group()
 exit_group = pygame.sprite.Group()
 
-
-
-# #create item boxes
-# item_box = ItemBox('Health', 100, 260)
-# item_box_group.add(item_box)
-# item_box = ItemBox('Ammo', 400, 260)
-# item_box_group.add(item_box)
-# item_box = ItemBox('Grenade', 500, 260)
-# item_box_group.add(item_box)
-
-# player = Soldier('player', 200, 200, 1.65, 5, 20, 5)
-# health_bar = HealthBar(10, 10, player.health, player.health)
-#
-# enemy = Soldier('enemy', 500, 200, 1.65, 2, 20, 0)
-# enemy2 = Soldier('enemy', 300, 200, 1.65, 2, 20, 0)
-#
-# enemy_group.add(enemy)
-# enemy_group.add(enemy2)
-
-# #draws player coordinates
-# x = 200
-# y = 200
-# scale = 3
 
 #empty tile list
 world_data = []
