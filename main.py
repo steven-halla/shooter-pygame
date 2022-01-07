@@ -74,10 +74,12 @@ def draw_text(text, font, text_col, x, y):
 
 def draw_bg():
     screen.fill(BG)
-    screen.blit(sky_img, (0,0))
-    screen.blit(mountain_img, (0, SCREEN_HEIGHT - mountain_img.get_height() - 300))
-    screen.blit(pine1_img, (0, SCREEN_HEIGHT - pine1_img.get_height() - 150))
-    screen.blit(pine2_img, (0, SCREEN_HEIGHT - pine2_img.get_height()))
+    width = sky_img.get_width()
+    for x in range(5):
+        screen.blit(sky_img, ((x * width) - bg_scroll * 0.5, 0))
+        screen.blit(mountain_img, ((x * width) - bg_scroll * 0.6, SCREEN_HEIGHT - mountain_img.get_height() - 300))
+        screen.blit(pine1_img, ((x * width) - bg_scroll * 0.7, SCREEN_HEIGHT - pine1_img.get_height() - 150))
+        screen.blit(pine2_img, ((x * width) - bg_scroll * 0.8, SCREEN_HEIGHT - pine2_img.get_height()))
 
 
 
@@ -278,6 +280,7 @@ class World():
         self.obstacle_list = []
 
     def process_data(self, data):
+        self.level_length = len(data[0])
         #iteriate through each value in level data file
         for y, row in enumerate(data):
             for x, tile in enumerate(row):
@@ -352,7 +355,8 @@ class Exit(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.midtop = (x + TILE_SIZE // 2, y + (TILE_SIZE - self.image.get_height()))
 
-
+    def update(self):
+        self.rect.x += screen_scroll
 
 class ItemBox(pygame.sprite.Sprite):
     def __init__(self, item_type, x, y):
@@ -363,6 +367,7 @@ class ItemBox(pygame.sprite.Sprite):
         self.rect.midtop = (x + TILE_SIZE // 2, y + (TILE_SIZE - self.image.get_height()))
 
     def update(self):
+        self.rect.x += screen_scroll
         if pygame.sprite.collide_rect(self, player):
             if self.item_type == 'Health':
                 player.health += 25
@@ -401,7 +406,7 @@ class Bullet(pygame.sprite.Sprite):
 
     def update(self):
         #move bullet
-        self.rect.x += (self.direction * self.speed)
+        self.rect.x += (self.direction * self.speed) + screen_scroll
         #check if bullet has left screen
         if self.rect.right < 0 or self.rect.left > SCREEN_WIDTH:
             self.kill()
@@ -461,7 +466,7 @@ class Grenade(pygame.sprite.Sprite):
 
 
 
-        self.rect.x += dx
+        self.rect.x += dx + screen_scroll
         self.rect.y += dy
 
         self.timer -= 1
@@ -493,6 +498,8 @@ class Explosion(pygame.sprite.Sprite):
         self.counter = 0
 
     def update(self):
+
+        self.rect.x += screen_scroll
         EXPLOSION_SPEED = 4
         #update explosion animation
         self.counter += 1
@@ -622,6 +629,7 @@ while run:
         else:
             player.update_action(0)
         screen_scroll = player.move(moving_left, moving_right)
+        bg_scroll -= screen_scroll
 
     for event in pygame.event.get():
         #quit game
