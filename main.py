@@ -2,6 +2,7 @@ import pygame
 import os
 import random
 import csv
+import button
 
 pygame.init()
 
@@ -528,7 +529,8 @@ class Explosion(pygame.sprite.Sprite):
                 self.image = self.images[self.frame_index]
 
 #create buttons
-start_button =
+start_button = button.Button(SCREEN_WIDTH // 2 - 130, SCREEN_HEIGHT // 2 - 150, start_img,1) # button is name of file, Button() is name of class
+exit_button = button.Button(SCREEN_WIDTH // 2 - 110, SCREEN_HEIGHT // 2 + 50, exit_img, 1) # button is name of file, Button() is name of class
 
 #sprite groups
 enemy_group = pygame.sprite.Group()
@@ -567,6 +569,9 @@ while run:
     if start_game == False:
         # draw menu
         screen.fill(BG)
+        #ad button
+        start_button.draw(screen)
+        exit_button.draw(screen)
 
     else:
 
