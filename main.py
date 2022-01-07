@@ -35,7 +35,7 @@ grenade_thrown = False
 pine1_img = pygame.image.load('img/background/pine1.png').convert_alpha()
 pine2_img = pygame.image.load('img/background/pine2.png').convert_alpha()
 mountain_img = pygame.image.load('img/background/mountain.png').convert_alpha()
-sky_img = pygame.image.load('img/background/sky.png').convert_alpha()
+sky_img = pygame.image.load('img/background/sky_cloud.png').convert_alpha()
 
 
 #tiles in a list
@@ -71,6 +71,8 @@ def draw_text(text, font, text_col, x, y):
 
 def draw_bg():
     screen.fill(BG)
+    screen.blit(sky_img, (0,0))
+    screen.blit(mountain_img, (0, SCREEN_HEIGHT - mountain_img.get_height() - 300))
 
 
 
