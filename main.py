@@ -594,8 +594,11 @@ class ScreenFade():
         fade_complete = False
         self.fade_counter += self.speed
         if self.direction == 1: #whole screen fade
+            #we are buildign screen fades for differnt effect comment out 1/4 lines to see differnt effects
             pygame.draw.rect(screen, self.color, (0 - self.fade_counter, 0, SCREEN_WIDTH //2, SCREEN_HEIGHT))
             pygame.draw.rect(screen, self.color, (SCREEN_WIDTH // 2 + self.fade_counter, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
+            pygame.draw.rect(screen, self.color, (0, 0 - self.fade_counter, SCREEN_WIDTH, SCREEN_HEIGHT // 2) )
+            pygame.draw.rect(screen, self.color, (0, SCREEN_HEIGHT // 2 + self.fade_counter, SCREEN_WIDTH, SCREEN_HEIGHT))
         if self.direction == 2:#verticle screeen fade down
             pygame.draw.rect(screen, self.color, (0, 0, SCREEN_WIDTH, 0 + self.fade_counter))
         if self.fade_counter >= SCREEN_WIDTH:
@@ -724,6 +727,7 @@ while run:
             bg_scroll -= screen_scroll
             #check if player has completed the level
             if level_complete:
+                start_intro = True
                 level += 1
                 bg_scroll = 0
                 world_data = reset_level()
