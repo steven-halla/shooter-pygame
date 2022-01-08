@@ -595,6 +595,7 @@ class ScreenFade():
         self.fade_counter += self.speed
         if self.direction == 1: #whole screen fade
             pygame.draw.rect(screen, self.color, (0 - self.fade_counter, 0, SCREEN_WIDTH //2, SCREEN_HEIGHT))
+            pygame.draw.rect(screen, self.color, (SCREEN_WIDTH // 2 + self.fade_counter, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
         if self.direction == 2:#verticle screeen fade down
             pygame.draw.rect(screen, self.color, (0, 0, SCREEN_WIDTH, 0 + self.fade_counter))
         if self.fade_counter >= SCREEN_WIDTH:
@@ -744,6 +745,7 @@ while run:
             if death_fade.fade():
                 if restart_button.draw(screen):
                     death_fade.fade_counter = 0
+                    start_intro = True
                     bg_scroll = 0
                     world_data = reset_level()
                     #load in level data and create world
