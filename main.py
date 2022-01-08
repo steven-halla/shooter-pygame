@@ -195,6 +195,10 @@ class Soldier(pygame.sprite.Sprite):
                     self.in_air = False
                     dy = tile[1].top - self.rect.bottom
 
+        #check if player touches water
+        if pygame.sprite.spritecollide(self, water_group,)
+
+
         #check if going off the edges of the screen
         if self.char_type == 'player':
             if self.rect.left + dx < 0 or self.rect.right + dx > SCREEN_WIDTH:
