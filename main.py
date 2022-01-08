@@ -44,6 +44,16 @@ pygame.mixer.music.load('audio/music2.mp3')
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.play(-1, 0.0, 5000)
 
+jump_fx = pygame.mixer.Sound('audio/jump.wav')
+jump_fx.set_volume(0.5)
+
+shot_fx = pygame.mixer.Sound('audio/shot.wav')
+shot_fx.set_volume(0.5)
+
+grenade_fx = pygame.mixer.Sound('audio/grenade.wav')
+grenade_fx.set_volume(0.5)
+
+
 #load images
 start_img = pygame.image.load('img/start_btn.png').convert_alpha()
 exit_img = pygame.image.load('img/exit_btn.png').convert_alpha()
@@ -262,6 +272,7 @@ class Soldier(pygame.sprite.Sprite):
             bullet_group.add(bullet)
 
             self.ammo -= 1
+            shot_fx.play()
 
     def ai(self):
         if self.alive and player.alive:
@@ -529,6 +540,7 @@ class Grenade(pygame.sprite.Sprite):
         self.timer -= 1
         if self.timer <= 0:
             self.kill()
+            grenade_fx.play()
             explosion = Explosion(self.rect.x, self.rect.y, 0.5)
             explosion_group.add(explosion)
             if abs(self.rect.centerx - player.rect.centerx) <  TILE_SIZE * 2 and \
@@ -719,6 +731,7 @@ while run:
         #quit game
         if event.type == pygame.QUIT:
             run = False
+
     #keyboard input
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a:
@@ -731,6 +744,7 @@ while run:
                 grenade = True
             if event.key == pygame.K_w and player.alive:
                 player.jump = True
+                jump_fx.play()
             if event.key == pygame.K_ESCAPE:
                 run = False
 
