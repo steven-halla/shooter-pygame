@@ -39,6 +39,7 @@ grenade_thrown = False
 #load images
 start_img = pygame.image.load('img/start_btn.png').convert_alpha()
 exit_img = pygame.image.load('img/exit_btn.png').convert_alpha()
+restart_img = pygame.image.load('img/restart_btn.png').convert_alpha()
 
 #background
 pine1_img = pygame.image.load('img/background/pine1.png').convert_alpha()
@@ -196,7 +197,12 @@ class Soldier(pygame.sprite.Sprite):
                     dy = tile[1].top - self.rect.bottom
 
         #check if player touches water
-        if pygame.sprite.spritecollide(self, water_group,)
+        if pygame.sprite.spritecollide(self, water_group, False):
+            self.health = 0
+
+        #check if player fell off map in hole
+        if self.rect.bottom > SCREEN_HEIGHT:
+            self.health = 0
 
 
         #check if going off the edges of the screen
@@ -535,6 +541,7 @@ class Explosion(pygame.sprite.Sprite):
 #create buttons
 start_button = button.Button(SCREEN_WIDTH // 2 - 130, SCREEN_HEIGHT // 2 - 150, start_img,1) # button is name of file, Button() is name of class
 exit_button = button.Button(SCREEN_WIDTH // 2 - 110, SCREEN_HEIGHT // 2 + 50, exit_img, 1) # button is name of file, Button() is name of class
+restart_button = button.Button(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, restart_img, 2) # button is name of file, Button() is name of class
 
 #sprite groups
 enemy_group = pygame.sprite.Group()
@@ -641,6 +648,10 @@ while run:
                 player.update_action(0)
             screen_scroll = player.move(moving_left, moving_right)
             bg_scroll -= screen_scroll
+        else:
+            screen_scroll = 0
+            if restart_button.draw(screen):
+                bg_scroll = 0
 
 
 
