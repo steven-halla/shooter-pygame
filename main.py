@@ -30,6 +30,7 @@ screen_scroll = 0
 bg_scroll = 0
 level = 1
 start_game = False
+start_intro = False
 
 # define player action vars
 
@@ -602,6 +603,7 @@ class ScreenFade():
         return fade_complete
 
 #create screen fades
+intro_fade = ScreenFade(1, BLACK, 4)
 death_fade = ScreenFade(2, PINK, 4)
 
 #create buttons
@@ -649,6 +651,7 @@ while run:
         #ad button
         if start_button.draw(screen):
             start_game = True
+            start_intro = True
         if exit_button.draw(screen):
             run = False
 
@@ -693,7 +696,11 @@ while run:
         water_group.draw(screen)
         exit_group.draw(screen)
 
-
+        #show intro
+        if start_intro == True:
+            if intro_fade.fade():
+                start_intro = False
+                intro_fade.fade_counter = 0
 
 
         if player.alive:
@@ -736,6 +743,7 @@ while run:
             screen_scroll = 0
             if death_fade.fade():
                 if restart_button.draw(screen):
+                    death_fade.fade_counter = 0
                     bg_scroll = 0
                     world_data = reset_level()
                     #load in level data and create world
