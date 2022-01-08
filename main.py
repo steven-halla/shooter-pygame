@@ -1,9 +1,11 @@
 import pygame
+from pygame import mixer
 import os
 import random
 import csv
 import button
 
+mixer.init()
 pygame.init()
 
 SCREEN_WIDTH = 800
@@ -36,6 +38,11 @@ moving_right = False
 shoot = False
 grenade = False
 grenade_thrown = False
+
+#lod music and sounds
+pygame.mixer.music.load('audio/music2.mp3')
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.play(-1, 0.0, 5000)
 
 #load images
 start_img = pygame.image.load('img/start_btn.png').convert_alpha()
@@ -193,7 +200,8 @@ class Soldier(pygame.sprite.Sprite):
         if self.vel_y > 10:
             self.vel_y
         dy += self.vel_y
-    #check for collision
+
+        #check for collision
         for tile in world.obstacle_list:
             #x collision
             if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
